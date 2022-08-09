@@ -1,0 +1,177 @@
+html,
+body {
+  width: 100%;
+  margin: 0px;
+}
+
+body {
+  background-color: #bfa38f;
+  position: relative;
+}
+
+body .shop-container {
+  background-color: #695b5e;
+  width: 700px;
+  height: 800px;
+  margin: 50px auto 0px;
+  padding: 10px;
+}
+
+body .shop-container h1 {
+  font-size: 48px;
+  color: #ffffff;
+  text-align: center;
+}
+
+body .shop-container .shop-list {
+  background-color: #f1dccc;
+  padding: 10px;
+  height: 650px;
+}
+
+body .shop-container .shop-list .add-item {
+  color: #907a6e;
+  background-color: #f3e8e0;
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: #907a6e 2px solid;
+}
+
+body .shop-container .shop-list table {
+  width: 100%;
+}
+
+body .shop-container .shop-list table thead {
+  background-color: #b6ae92;
+}
+
+body .shop-container .shop-list table thead tr th {
+  font-size: 20px;
+  outline: #b6ae92 1px solid;
+  padding: 1px 3px;
+  text-align: left;
+}
+
+body .shop-container .shop-list table tbody {
+  background-color: #f3e8e0;
+}
+
+body .shop-container .shop-list table tbody tr td {
+  font-size: 18px;
+  outline: #f3e8e0 1px solid;
+  padding: 1px 3px;
+}
+
+body .shop-container #add-list {
+  height: 400px;
+  top: 200px;
+  -webkit-transform: translateY(-660px);
+          transform: translateY(-660px);
+}
+
+body .shop-container #add-list .content input {
+  display: block;
+}
+
+body .shop-container #edit-list {
+  height: 400px;
+  top: 200px;
+  -webkit-transform: translateY(-660px);
+          transform: translateY(-660px);
+}
+
+body .shop-container #edit-list .content input {
+  display: block;
+}
+
+body .shop-container #del-list {
+  height: 180px;
+  top: 250px;
+  -webkit-transform: translateY(-480px);
+          transform: translateY(-480px);
+}
+
+body .shop-container .list {
+  width: 800px;
+  left: calc(50% - 400px);
+  position: absolute;
+  background-color: #f3e8e0;
+  color: #ffffff;
+  border-radius: 10px;
+  -webkit-transition: 1s cubic-bezier(0.1, 0.1, 0.25, 1);
+  transition: 1s cubic-bezier(0.1, 0.1, 0.25, 1);
+  opacity: 0;
+}
+
+body .shop-container .list .title {
+  background-color: #695b5e;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+}
+
+body .shop-container .list .title h2 {
+  margin: 0px;
+  padding: 20px;
+}
+
+body .shop-container .list .title .close {
+  position: absolute;
+  font-size: 60px;
+  top: 0px;
+  right: 20px;
+  cursor: pointer;
+}
+
+body .shop-container .list .content {
+  color: #907a6e;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+body .shop-container .list .content .label {
+  margin-bottom: 5px;
+}
+
+body .shop-container .list .content input {
+  width: 99%;
+  height: 25px;
+  border: #907a6e 1px solid;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+body .shop-container .list .content input:focus {
+  outline: none;
+}
+
+body .shop-container .list .submit {
+  color: #907a6e;
+  background-color: #f3e8e0;
+  font-size: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  outline: #907a6e 2px solid;
+  position: absolute;
+  right: 20px;
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}
+
+body .shop-container .list .submit:hover {
+  background-color: #907a6e;
+  color: #f3e8e0;
+}
+
+body button {
+  cursor: pointer;
+  border: none;
+}
+
+body button:focus {
+  outline: none;
+}
+/*# sourceMappingURL=index.css.map */
