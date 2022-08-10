@@ -13,7 +13,7 @@
     <div id="vueapp" class="shop-container">
         <h1>Coffee Shop</h1>
         <div class="shop-list">
-            <button class="add-item" v-on:click="addList()"><i class="fa-solid fa-plus"></i>新增訂單</button>
+            <button class="add-item" @click="addList()"><i class="fa-solid fa-plus"></i>新增訂單</button>
             <table>
                 <thead>
                     <tr>
@@ -26,13 +26,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in coffeeList">
+                    <tr v-for="(item,index) in coffeeList">
                         <td>{{item.name}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.size}}</td>
                         <td>{{item.notes}}</td>
-                        <td style="text-align: center;cursor: pointer;" v-on:click="editList(item)">編輯</td>
-                        <td style="text-align: center;cursor: pointer;font-size: 30px;" v-on:click="delList(item)">&times;
+                        <td style="text-align: center;cursor: pointer;" @click="editList(item,index)">編輯</td>
+                        <td style="text-align: center;cursor: pointer;font-size: 30px;"
+                            @click="delList(item,index)">
+                            &times;
                         </td>
                     </tr>
                 </tbody>
@@ -42,7 +44,7 @@
         <div class="list" id="add-list">
             <div class="title">
                 <h2>新增訂單</h2>
-                <span class="close" v-on:click='closeAddList()'>&times;</span>
+                <span class="close" @click='closeAddList()'>&times;</span>
             </div>
 
             <div class="content">
@@ -51,14 +53,14 @@
                 <label for="">大小</label><input type="text" v-model="addItem.size">
                 <label for="">備註</label><input type="text" v-model="addItem.notes">
             </div>
-            <button class="submit" style="right: 100px;" id="add-btn" v-on:click="add()">新增品項</button>
-            <button class="submit" v-on:click='closeAddList()'>取消</button>
+            <button class="submit" style="right: 100px;" id="add-btn" @click="add()">新增品項</button>
+            <button class="submit" @click='closeAddList()'>取消</button>
         </div>
         <!-- 編輯訂單 -->
         <div class="list" id="edit-list">
             <div class="title">
                 <h2>編輯訂單</h2>
-                <span class="close" v-on:click='closeEditList()'>&times;</span>
+                <span class="close" @click='closeEditList()'>&times;</span>
             </div>
 
             <div class="content">
@@ -67,20 +69,20 @@
                 <label for="">大小</label><input type="text" v-model="editItem.size">
                 <label for="">備註</label><input type="text" v-model="editItem.notes">
             </div>
-            <button class="submit" style="right: 100px;" id="add-btn" v-on:click="edit()">修改品項</button>
-            <button class="submit" v-on:click='closeEditList()'>取消</button>
+            <button class="submit" style="right: 100px;" id="add-btn" onclick="edit()">修改品項</button>
+            <button class="submit" @click='closeEditList()'>取消</button>
         </div>
         <!-- 刪除訂單 -->
         <div class="list" id="del-list">
             <div class="title">
                 <h2>刪除訂單</h2>
-                <span class="close" v-on:click='closeDelList()'>&times;</span>
+                <span class="close" @click='closeDelList()'>&times;</span>
             </div>
             <div class="content">
                 是否要刪除此訂單?
             </div>
-            <button class="submit" style="right: 100px;" v-on:click="del()">確定</button>
-            <button class="submit" v-on:click='closeDelList()'>取消</button>
+            <button class="submit" style="right: 100px;" @click="del">確定</button>
+            <button class="submit" @click='closeDelList()'>取消</button>
         </div>
     </div>
 </body>
@@ -93,12 +95,14 @@
             return {
                 coffeeList: [
                     {
+                        id:"0",
                         name: "伯爵鮮奶茶",
                         price: "$80",
                         size: "L",
                         notes: ""
                     },
                     {
+                        id:"1",
                         name: "伯爵鮮奶茶",
                         price: "$70",
                         size: "M",
@@ -106,12 +110,14 @@
                     }
                 ],
                 addItem: {
+                    id:"",
                     name: "",
                     price: "",
                     size: "",
                     notes: ""
                 },
                 editItem: {
+                    id:"",
                     name: "",
                     price: "",
                     size: "",
@@ -126,12 +132,20 @@
                 $('#add-list').css('transform', 'translateY(0px)');
             },
             add() {
-                vueApp.coffeeList.push(vueApp.addItem)
-                console.log(vueApp.addItem);
+                var newId = vueApp.coffeeList.length;
+                vueApp.coffeeList.push({
+                    id: newId,
+                    name: vueApp.addItem.name,
+                    price: vueApp.addItem.price,
+                    size: vueApp.addItem.size,
+                    notes: vueApp.addItem.notes
+                })
+                console.log(vueApp.coffeeList);
                 $('#add-list').css('opacity', '0');
                 $('#add-list').css('transform', 'translateY(-700px)');
                 //新增視窗清除
                 vueApp.addItem = {
+                    id:"",
                     name: "",
                     price: "",
                     size: "",
@@ -143,6 +157,7 @@
                 $('#add-list').css('transform', 'translateY(-700px)');
                 //新增視窗清除
                 vueApp.addItem = {
+                    id:"",
                     name: "",
                     price: "",
                     size: "",
@@ -150,33 +165,26 @@
                 }
             },
             // 編輯人員
-            editList(item) {
+            editList(item, index) {
                 this.editItem = {
                     ...item
                 };
                 $('#edit-list').css('opacity', '1');
                 $('#edit-list').css('transform', 'translateY(0px)');
-                console.log(vueApp.coffeeList.indexOf(item));
-                edit(item);
-            },
-            edit(list){
-                vueApp.coffeeList.splice(vueApp.coffeeList.indexOf(list),1,vueApp.editItem);
-                $('#edit-list').css('opacity', '0');
-                $('#edit-list').css('transform', 'translateY(-700px)');
-
+                edit(item, index);
             },
             closeEditList() {
                 $('#edit-list').css('opacity', '0');
                 $('#edit-list').css('transform', 'translateY(-700px)');
             },
             // 刪除人員
-            delList(item) {
+            delList(item, index) {
                 $('#del-list').css('opacity', '1');
                 $('#del-list').css('transform', 'translateY(0px)');
-                del(item);
+                del(item, index);
             },
-            del(list){
-                vueApp.coffeeList.splice(vueApp.coffeeList.indexOf(list),1);
+            del(list, num) {
+                vueApp.coffeeList.splice(num, 1);
                 $('#del-list').css('opacity', '0');
                 $('#del-list').css('transform', 'translateY(-400px)');
             },
@@ -184,8 +192,22 @@
                 $('#del-list').css('opacity', '0');
                 $('#del-list').css('transform', 'translateY(-400px)');
             }
-        }
+        },
+        // computed: {
+        //     edit: function(list) {
+        //         vueApp.coffeeList.splice(vueApp.coffeeList.indexOf(list), 1, vueApp.editItem);
+        //         $('#edit-list').css('opacity', '0');
+        //         $('#edit-list').css('transform', 'translateY(-700px)');
+        //         console.log(vueApp.coffeeList.indexOf(list));
+        //     },
+        // },
     }).$mount('#vueapp');
+    function edit(list, num) {
+        vueApp.coffeeList.splice(vueApp.coffeeList.indexOf(list), 1, vueApp.editItem);
+        $('#edit-list').css('opacity', '0');
+        $('#edit-list').css('transform', 'translateY(-700px)');
+        console.log(vueApp.coffeeList.indexOf(list));
+    };
 </script>
 
 </html>
