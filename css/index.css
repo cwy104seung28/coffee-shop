@@ -52,6 +52,7 @@ body .shop-container .shop-list table thead tr th {
   outline: #b6ae92 1px solid;
   padding: 1px 3px;
   text-align: left;
+  color: #ffffff;
 }
 
 body .shop-container .shop-list table tbody {
