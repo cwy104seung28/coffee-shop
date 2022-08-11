@@ -26,14 +26,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item,index) in coffeeList">
+                    <tr v-for="(item,index) in coffeeList" :key="index">
                         <td>{{item.name}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.size}}</td>
                         <td>{{item.notes}}</td>
                         <td style="text-align: center;cursor: pointer;" @click="editList(item,index)">編輯</td>
-                        <td style="text-align: center;cursor: pointer;font-size: 30px;"
-                            @click="delList(item,index)">
+                        <td style="text-align: center;cursor: pointer;font-size: 30px;" @click="delList(item,index)">
                             &times;
                         </td>
                     </tr>
@@ -69,7 +68,7 @@
                 <label for="">大小</label><input type="text" v-model="editItem.size">
                 <label for="">備註</label><input type="text" v-model="editItem.notes">
             </div>
-            <button class="submit" style="right: 100px;" id="add-btn" onclick="edit()">修改品項</button>
+            <button class="submit" style="right: 100px;" id="add-btn" @click="edit()">修改品項</button>
             <button class="submit" @click='closeEditList()'>取消</button>
         </div>
         <!-- 刪除訂單 -->
@@ -84,6 +83,17 @@
             <button class="submit" style="right: 100px;" @click="del">確定</button>
             <button class="submit" @click='closeDelList()'>取消</button>
         </div>
+        <!-- 錯誤提示 -->
+        <div class="list" id="wrong-hit">
+            <div class="title">
+                <h2>錯誤提示</h2>
+                <span class="close" @click='closeWrongHit()'>&times;</span>
+            </div>
+            <div class="content">
+                輸入錯誤，請重新輸入
+            </div>
+            <button class="submit" @click='closeDelList()'>確定</button>
+        </div>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -95,37 +105,50 @@
             return {
                 coffeeList: [
                     {
-                        id:"0",
+                        id: "0",
                         name: "伯爵鮮奶茶",
                         price: "$80",
                         size: "L",
                         notes: ""
                     },
                     {
-                        id:"1",
+                        id: "1",
                         name: "伯爵鮮奶茶",
                         price: "$70",
                         size: "M",
                         notes: ""
+                    },
+                    {
+                        id: "2",
+                        name: "鮮奶茶",
+                        price: "$70",
+                        size: "M",
+                        notes: "????"
                     }
                 ],
                 addItem: {
-                    id:"",
+                    id: "",
                     name: "",
                     price: "",
                     size: "",
                     notes: ""
                 },
                 editItem: {
-                    id:"",
+                    id: "",
                     name: "",
                     price: "",
                     size: "",
                     notes: ""
+                },
+                delItem: {
+                    id: "",
                 }
             }
         },
         methods: {
+            // setList(arr) {
+            //     this.coffeeList = JSON.parse(JSON.stringify(arr));
+            // },
             // 新增人員
             addList() {
                 $('#add-list').css('opacity', '1');
@@ -145,7 +168,7 @@
                 $('#add-list').css('transform', 'translateY(-700px)');
                 //新增視窗清除
                 vueApp.addItem = {
-                    id:"",
+                    id: "",
                     name: "",
                     price: "",
                     size: "",
@@ -157,7 +180,7 @@
                 $('#add-list').css('transform', 'translateY(-700px)');
                 //新增視窗清除
                 vueApp.addItem = {
-                    id:"",
+                    id: "",
                     name: "",
                     price: "",
                     size: "",
@@ -171,7 +194,26 @@
                 };
                 $('#edit-list').css('opacity', '1');
                 $('#edit-list').css('transform', 'translateY(0px)');
-                edit(item, index);
+                console.log(item);
+                // console.log(vueApp.coffeeList[this.editItem.id]);
+            },
+            edit() {
+                var id = this.editItem.id
+                this.coffeeList[id].name = this.editItem.name;
+                this.coffeeList[id].price = this.editItem.price;
+                this.coffeeList[id].size = this.editItem.size;
+                this.coffeeList[id].notes = this.editItem.notes;
+
+                // this.coffeeList.splice(this.coffeeList[this.editItem.id], 1, this.editItem);
+                $('#edit-list').css('opacity', '0');
+                $('#edit-list').css('transform', 'translateY(-700px)');
+                this.editItem = {
+                    id: "",
+                    name: "",
+                    price: "",
+                    size: "",
+                    notes: ""
+                }
             },
             closeEditList() {
                 $('#edit-list').css('opacity', '0');
@@ -179,12 +221,12 @@
             },
             // 刪除人員
             delList(item, index) {
+                this.delItem.id = item.id;
                 $('#del-list').css('opacity', '1');
                 $('#del-list').css('transform', 'translateY(0px)');
-                del(item, index);
             },
-            del(list, num) {
-                vueApp.coffeeList.splice(num, 1);
+            del() {
+                vueApp.coffeeList.splice(this.delItem.id, 1);
                 $('#del-list').css('opacity', '0');
                 $('#del-list').css('transform', 'translateY(-400px)');
             },
@@ -202,12 +244,7 @@
         //     },
         // },
     }).$mount('#vueapp');
-    function edit(list, num) {
-        vueApp.coffeeList.splice(vueApp.coffeeList.indexOf(list), 1, vueApp.editItem);
-        $('#edit-list').css('opacity', '0');
-        $('#edit-list').css('transform', 'translateY(-700px)');
-        console.log(vueApp.coffeeList.indexOf(list));
-    };
+
 </script>
 
 </html>
